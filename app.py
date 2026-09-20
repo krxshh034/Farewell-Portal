@@ -2272,9 +2272,5 @@ if __name__ == "__main__":
     app.run(
         host="0.0.0.0",
         port=5000,
-        debug=False,
-        ssl_context=(
-            "192.168.29.218.pem",
-            "192.168.29.218-key.pem"
-        )
+        debug=False
     )
