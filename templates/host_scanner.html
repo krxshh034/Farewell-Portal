@@ -1,0 +1,1288 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Obsidia'27 — QR Scanner
+    </title>
+
+
+    <!-- QR scanner library -->
+
+    <script src="https://unpkg.com/html5-qrcode"
+            type="text/javascript">
+    </script>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        body {
+
+            margin: 0;
+
+            min-height: 100vh;
+
+            background: #050505;
+
+            color: #eeeeee;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+        }
+
+
+        .topbar {
+
+            padding:
+                20px 25px;
+
+            border-bottom:
+                1px solid
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.15
+                );
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+        }
+
+
+        .event {
+
+            font-family:
+                Georgia,
+                serif;
+
+            font-size: 23px;
+
+            letter-spacing: 5px;
+
+            font-weight: bold;
+        }
+
+
+        .subtitle {
+
+            margin-top: 5px;
+
+            color: #777777;
+
+            font-size: 9px;
+
+            letter-spacing: 2px;
+
+            text-transform: uppercase;
+        }
+
+
+        .back {
+
+            color: #999999;
+
+            text-decoration: none;
+
+            font-size: 10px;
+
+            letter-spacing: 2px;
+        }
+
+
+        .back:hover {
+
+            color: #ffffff;
+        }
+
+
+        .container {
+
+            width:
+                min(
+                    600px,
+                    calc(100% - 30px)
+                );
+
+            margin:
+                30px auto;
+        }
+
+
+        .scanner-box {
+
+            padding: 20px;
+
+            background: #0b0b0b;
+
+            border:
+                1px solid
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.15
+                );
+        }
+
+
+        .instruction {
+
+            text-align: center;
+
+            margin-bottom: 20px;
+
+            color: #888888;
+
+            font-size: 11px;
+
+            letter-spacing: 2px;
+
+            text-transform: uppercase;
+        }
+
+
+        #reader {
+
+            width: 100%;
+
+            overflow: hidden;
+
+            background: #000000;
+        }
+
+
+        #reader video {
+
+            border-radius: 0 !important;
+        }
+
+
+        .result {
+
+            display: none;
+
+            margin-top: 20px;
+
+            padding: 25px;
+
+            border:
+                1px solid
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.2
+                );
+
+            background: #0b0b0b;
+
+            text-align: center;
+        }
+
+
+        .result.show {
+
+            display: block;
+        }
+
+
+        .result-icon {
+
+            font-size: 38px;
+
+            margin-bottom: 10px;
+        }
+
+
+        .result-title {
+
+            font-family:
+                Georgia,
+                serif;
+
+            font-size: 23px;
+
+            letter-spacing: 2px;
+
+            margin-bottom: 18px;
+        }
+
+
+        .result-details {
+
+            padding:
+                15px 0;
+
+            border-top:
+                1px solid
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.1
+                );
+
+            border-bottom:
+                1px solid
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.1
+                );
+
+            text-align: left;
+        }
+
+
+        .detail {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            gap: 20px;
+
+            padding: 7px 0;
+
+            font-size: 13px;
+        }
+
+
+        .detail-label {
+
+            color: #777777;
+        }
+
+
+        .detail-value {
+
+            text-align: right;
+
+            font-weight: bold;
+        }
+
+
+        .message {
+
+            margin-top: 15px;
+
+            color: #999999;
+
+            font-size: 12px;
+
+            line-height: 1.5;
+        }
+
+
+        .check-in {
+
+            width: 100%;
+
+            margin-top: 20px;
+
+            padding: 15px;
+
+            border:
+                1px solid
+                #aaaaaa;
+
+            background: #eeeeee;
+
+            color: #050505;
+
+            cursor: pointer;
+
+            font-weight: bold;
+
+            letter-spacing: 2px;
+        }
+
+
+        .check-in:hover {
+
+            background: #cccccc;
+        }
+
+
+        .scan-again {
+
+            width: 100%;
+
+            margin-top: 10px;
+
+            padding: 13px;
+
+            border:
+                1px solid
+                #444444;
+
+            background: transparent;
+
+            color: #aaaaaa;
+
+            cursor: pointer;
+
+            letter-spacing: 2px;
+        }
+
+
+        .scan-again:hover {
+
+            color: #ffffff;
+
+            border-color: #777777;
+        }
+
+
+        .valid {
+
+            border-color:
+                rgba(
+                    180,
+                    255,
+                    200,
+                    0.35
+                );
+        }
+
+
+        .invalid {
+
+            border-color:
+                rgba(
+                    255,
+                    120,
+                    120,
+                    0.35
+                );
+        }
+
+
+        .warning {
+
+            border-color:
+                rgba(
+                    255,
+                    210,
+                    100,
+                    0.35
+                );
+        }
+
+
+        @media (max-width: 500px) {
+
+            .topbar {
+
+                padding: 18px;
+            }
+
+
+            .event {
+
+                font-size: 19px;
+
+                letter-spacing: 3px;
+            }
+
+
+            .container {
+
+                width:
+                    calc(100% - 20px);
+
+                margin-top: 20px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <header class="topbar">
+
+
+        <div>
+
+            <div class="event">
+                OBSIDIA'27
+            </div>
+
+            <div class="subtitle">
+                Entry Scanner
+            </div>
+
+        </div>
+
+
+        <a
+            href="{{ url_for('host_dashboard') }}"
+            class="back"
+        >
+            DASHBOARD
+        </a>
+
+
+    </header>
+
+
+    <main class="container">
+
+
+        <div class="scanner-box">
+
+
+            <div class="instruction">
+                Scan attendee entry pass
+            </div>
+
+
+            <div id="reader"></div>
+
+
+        </div>
+
+
+        <div
+            id="result"
+            class="result"
+        >
+
+            <div
+                id="resultIcon"
+                class="result-icon"
+            ></div>
+
+
+            <div
+                id="resultTitle"
+                class="result-title"
+            ></div>
+
+
+            <div
+                id="resultDetails"
+                class="result-details"
+            ></div>
+
+
+            <div
+                id="resultMessage"
+                class="message"
+            ></div>
+
+
+            <button
+                id="checkInButton"
+                class="check-in"
+                style="display:none;"
+                type="button"
+            >
+                CHECK IN
+            </button>
+
+
+            <button
+                id="scanAgainButton"
+                class="scan-again"
+                type="button"
+            >
+                SCAN ANOTHER
+            </button>
+
+
+        </div>
+
+
+    </main>
+
+
+    <script>
+
+        let scanner = null;
+
+        let currentToken = null;
+
+        let scannerLocked = false;
+
+
+        const resultBox =
+            document.getElementById(
+                "result"
+            );
+
+
+        const resultIcon =
+            document.getElementById(
+                "resultIcon"
+            );
+
+
+        const resultTitle =
+            document.getElementById(
+                "resultTitle"
+            );
+
+
+        const resultDetails =
+            document.getElementById(
+                "resultDetails"
+            );
+
+
+        const resultMessage =
+            document.getElementById(
+                "resultMessage"
+            );
+
+
+        const checkInButton =
+            document.getElementById(
+                "checkInButton"
+            );
+
+
+        const scanAgainButton =
+            document.getElementById(
+                "scanAgainButton"
+            );
+
+
+        // ====================================================
+        // START SCANNER
+        // ====================================================
+
+        async function startScanner() {
+
+    scannerLocked = false;
+
+    currentToken = null;
+
+
+    scanner =
+        new Html5Qrcode(
+            "reader"
+        );
+
+
+    try {
+
+        await scanner.start(
+
+            {
+                facingMode:
+                    "environment"
+            },
+
+            {
+                fps: 10,
+
+                qrbox: {
+                    width: 250,
+                    height: 250
+                }
+            },
+
+            onScanSuccess,
+
+            onScanFailure
+
+        );
+
+    } catch (error) {
+
+        console.error(
+            error
+        );
+
+
+        showResult(
+
+            "invalid",
+
+            "CAMERA ERROR",
+
+            "",
+
+            "Unable to access the camera. Make sure camera permission is enabled for this browser."
+
+        );
+
+    }
+
+}
+
+
+        function onScanFailure(error) {
+    // Normal:
+    // this runs constantly while
+    // the camera searches for a QR.
+}
+
+
+        // ====================================================
+        // QR FOUND
+        // ====================================================
+
+        async function onScanSuccess(decodedText) {
+
+    console.log(
+        "QR DETECTED:",
+        decodedText
+    );
+
+    if (scannerLocked) {
+
+                return;
+
+            }
+
+
+            scannerLocked = true;
+
+
+            currentToken =
+                decodedText.trim();
+
+
+            try {
+
+                await scanner.stop();
+
+            } catch (error) {
+
+                console.log(
+                    "Scanner stop:",
+                    error
+                );
+
+            }
+
+
+            await validateTicket(
+                currentToken
+            );
+
+        }
+
+
+        // ====================================================
+        // VALIDATE WITH SERVER
+        // ====================================================
+
+        async function validateTicket(
+            token
+        ) {
+
+            try {
+
+                const response =
+                    await fetch(
+                        "{{ url_for('validate_ticket') }}",
+                        {
+
+                            method: "POST",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/json"
+                            },
+
+                            body: JSON.stringify({
+
+                                ticket_token:
+                                    token
+
+                            })
+
+                        }
+                    );
+
+
+                const data =
+                    await response.json();
+
+
+                if (
+                    data.status ===
+                    "VALID"
+                ) {
+
+                    showValid(
+                        data
+                    );
+
+                }
+
+                else if (
+                    data.status ===
+                    "ALREADY_CHECKED_IN"
+                ) {
+
+                    showAlreadyCheckedIn(
+                        data
+                    );
+
+                }
+
+                else if (
+                    data.status ===
+                    "UNPAID"
+                ) {
+
+                    showUnpaid(
+                        data
+                    );
+
+                }
+
+                else {
+
+                    showInvalid(
+                        data.message
+                        ||
+                        "This ticket is not recognised."
+                    );
+
+                }
+
+
+            } catch (error) {
+
+                console.error(
+                    error
+                );
+
+
+                showInvalid(
+                    "Could not contact the server. Please try again."
+                );
+
+            }
+
+        }
+
+
+        // ====================================================
+        // VALID
+        // ====================================================
+
+        function showValid(
+            data
+        ) {
+
+            resultBox.className =
+                "result show valid";
+
+
+            resultIcon.textContent =
+                "✓";
+
+
+            resultTitle.textContent =
+                "VALID ENTRY PASS";
+
+
+            resultDetails.innerHTML = `
+
+    <div class="detail">
+
+        <span class="detail-label">
+            Name
+        </span>
+
+        <span class="detail-value">
+            ${escapeHtml(data.name || "")}
+        </span>
+
+    </div>
+
+
+    <div class="detail">
+
+        <span class="detail-label">
+            Class
+        </span>
+
+        <span class="detail-value">
+            ${escapeHtml(data.class_name || "")}
+        </span>
+
+    </div>
+
+
+    <div class="detail">
+
+        <span class="detail-label">
+            Ticket
+        </span>
+
+        <span class="detail-value">
+            ${escapeHtml(data.ticket_number || "")}
+        </span>
+
+    </div>
+
+
+    <div class="detail">
+
+        <span class="detail-label">
+            Checked In At
+        </span>
+
+        <span class="detail-value">
+            ${escapeHtml(data.checked_in_at || "")}
+        </span>
+
+    </div>
+
+`;
+
+
+            resultMessage.textContent =
+                "Payment verified. This pass is ready for entry.";
+
+
+            checkInButton.style.display =
+                "block";
+
+
+            checkInButton.disabled =
+                false;
+
+        }
+
+
+        // ====================================================
+        // ALREADY CHECKED IN
+        // ====================================================
+
+        function showAlreadyCheckedIn(
+            data
+        ) {
+
+            resultBox.className =
+                "result show warning";
+
+
+            resultIcon.textContent =
+                "⚠";
+
+
+            resultTitle.textContent =
+                "ALREADY CHECKED IN";
+
+
+            resultDetails.innerHTML = `
+
+                <div class="detail">
+
+                    <span class="detail-label">
+                        Name
+                    </span>
+
+                    <span class="detail-value">
+                        ${escapeHtml(data.name || "")}
+                    </span>
+
+                </div>
+
+
+                <div class="detail">
+
+                    <span class="detail-label">
+                        Class
+                    </span>
+
+                    <span class="detail-value">
+                        ${escapeHtml(data.class_name || "")}
+                    </span>
+
+                </div>
+
+
+                <div class="detail">
+
+                    <span class="detail-label">
+                        Ticket
+                    </span>
+
+                    <span class="detail-value">
+                        ${escapeHtml(data.ticket_number || "")}
+                    </span>
+
+                </div>
+
+            `;
+
+
+            resultMessage.textContent =
+                data.checked_in_at
+                    ? "This pass was already checked in."
+                    : "This pass has already been used.";
+
+
+            checkInButton.style.display =
+                "none";
+
+        }
+
+
+        // ====================================================
+        // UNPAID
+        // ====================================================
+
+        function showUnpaid(
+            data
+        ) {
+
+            resultBox.className =
+                "result show warning";
+
+
+            resultIcon.textContent =
+                "⚠";
+
+
+            resultTitle.textContent =
+                "PAYMENT NOT VERIFIED";
+
+
+            resultDetails.innerHTML = `
+
+                <div class="detail">
+
+                    <span class="detail-label">
+                        Name
+                    </span>
+
+                    <span class="detail-value">
+                        ${escapeHtml(data.name || "")}
+                    </span>
+
+                </div>
+
+
+                <div class="detail">
+
+                    <span class="detail-label">
+                        Class
+                    </span>
+
+                    <span class="detail-value">
+                        ${escapeHtml(data.class_name || "")}
+                    </span>
+
+                </div>
+
+            `;
+
+
+            resultMessage.textContent =
+                "This pass cannot be accepted because payment has not been verified.";
+
+
+            checkInButton.style.display =
+                "none";
+
+        }
+
+
+        // ====================================================
+        // INVALID
+        // ====================================================
+
+        function showInvalid(
+            message
+        ) {
+
+            resultBox.className =
+                "result show invalid";
+
+
+            resultIcon.textContent =
+                "✕";
+
+
+            resultTitle.textContent =
+                "INVALID TICKET";
+
+
+            resultDetails.innerHTML =
+                "";
+
+
+            resultMessage.textContent =
+                message;
+
+
+            checkInButton.style.display =
+                "none";
+
+        }
+
+
+        // ====================================================
+        // CHECK IN
+        // ====================================================
+
+        checkInButton.addEventListener(
+            "click",
+            async function () {
+
+                if (!currentToken) {
+
+                    return;
+
+                }
+
+
+                checkInButton.disabled =
+                    true;
+
+
+                checkInButton.textContent =
+                    "CHECKING IN...";
+
+
+                try {
+
+                    const response =
+                        await fetch(
+
+                            "{{ url_for('check_in_ticket') }}",
+
+                            {
+
+                                method: "POST",
+
+                                headers: {
+
+                                    "Content-Type":
+                                        "application/json"
+
+                                },
+
+                                body:
+                                    JSON.stringify({
+
+                                        ticket_token:
+                                            currentToken
+
+                                    })
+
+                            }
+
+                        );
+
+
+                    const data =
+                        await response.json();
+
+
+                    if (
+                        data.status ===
+                        "CHECKED_IN"
+                    ) {
+
+                        resultBox.className =
+                            "result show valid";
+
+
+                        resultIcon.textContent =
+                            "✓";
+
+
+                        resultTitle.textContent =
+                            "ENTRY CONFIRMED";
+
+
+                        resultDetails.innerHTML = `
+
+                            <div class="detail">
+
+                                <span class="detail-label">
+                                    Name
+                                </span>
+
+                                <span class="detail-value">
+                                    ${escapeHtml(data.name)}
+                                </span>
+
+                            </div>
+
+
+                            <div class="detail">
+
+                                <span class="detail-label">
+                                    Class
+                                </span>
+
+                                <span class="detail-value">
+                                    ${escapeHtml(data.class_name)}
+                                </span>
+
+                            </div>
+
+
+                            <div class="detail">
+
+                                <span class="detail-label">
+                                    Ticket
+                                </span>
+
+                                <span class="detail-value">
+                                    ${escapeHtml(data.ticket_number)}
+                                </span>
+
+                            </div>
+
+                        `;
+
+
+                        resultMessage.innerHTML = `
+    <strong style="
+        display: block;
+        color: #b8e6c1;
+        letter-spacing: 2px;
+        margin-bottom: 6px;
+    ">
+        ENTRY RECORDED
+    </strong>
+
+    Entry has been successfully recorded.
+`;
+
+                        checkInButton.style.display =
+                            "none";
+
+                            currentToken = null;
+
+
+                    } else {
+
+                        showAlreadyCheckedIn(
+                            data
+                        );
+
+                    }
+
+
+                } catch (error) {
+
+                    console.error(
+                        error
+                    );
+
+
+                    checkInButton.disabled =
+                        false;
+
+
+                    checkInButton.textContent =
+                        "CHECK IN";
+
+
+                    resultMessage.textContent =
+                        "Could not contact the server. Please try again.";
+
+                }
+
+            }
+        );
+
+
+        // ====================================================
+        // SCAN AGAIN
+        // ====================================================
+
+        scanAgainButton.addEventListener(
+            "click",
+            async function () {
+
+                resultBox.className =
+                    "result";
+
+
+                checkInButton.style.display =
+                    "none";
+
+
+                checkInButton.textContent =
+                    "CHECK IN";
+
+
+                currentToken =
+                    null;
+
+
+                scannerLocked =
+                    false;
+
+
+                await startScanner();
+
+            }
+        );
+
+
+        // ====================================================
+        // HTML ESCAPING
+        // ====================================================
+
+        function escapeHtml(
+            value
+        ) {
+
+            const div =
+                document.createElement(
+                    "div"
+                );
+
+
+            div.textContent =
+                value;
+
+
+            return div.innerHTML;
+
+        }
+
+
+        // ====================================================
+        // START
+        // ====================================================
+
+        startScanner();
+
+    </script>
+
+
+</body>
+
+</html>

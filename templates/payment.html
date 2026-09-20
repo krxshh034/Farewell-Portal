@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Payment — Obsidia'27</title>
+
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background:
+                radial-gradient(
+                    circle at top,
+                    #181818,
+                    #050505 60%
+                );
+
+            color: #eeeeee;
+
+            font-family: Arial, sans-serif;
+        }
+
+
+        .payment-card {
+
+            width: min(90%, 450px);
+
+            padding: 45px 30px;
+
+            text-align: center;
+
+            border: 1px solid #333333;
+
+            background: rgba(20, 20, 20, 0.92);
+
+            box-shadow:
+                0 30px 80px rgba(0, 0, 0, 0.7);
+
+        }
+
+
+        .brand {
+
+            font-family: Georgia, serif;
+
+            font-size: 30px;
+
+            letter-spacing: 5px;
+
+            margin-bottom: 8px;
+
+        }
+
+
+        .subtitle {
+
+            color: #888888;
+
+            font-size: 13px;
+
+            letter-spacing: 1px;
+
+            margin-bottom: 35px;
+
+        }
+
+
+        .details {
+
+            color: #aaaaaa;
+
+            line-height: 1.8;
+
+            margin-bottom: 25px;
+
+        }
+
+
+        .name {
+
+            color: #eeeeee;
+
+            font-size: 18px;
+
+        }
+
+
+        .registration {
+
+            font-size: 12px;
+
+            color: #666666;
+
+        }
+
+
+        .amount {
+
+            font-family: Georgia, serif;
+
+            font-size: 38px;
+
+            margin: 25px 0 30px;
+
+        }
+
+
+        .pay-button {
+
+            width: 100%;
+
+            padding: 17px;
+
+            border: 1px solid #aaaaaa;
+
+            background:
+                linear-gradient(
+                    120deg,
+                    #777777,
+                    #eeeeee,
+                    #888888
+                );
+
+            color: #080808;
+
+            font-weight: bold;
+
+            letter-spacing: 2px;
+
+            cursor: pointer;
+
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease;
+
+        }
+
+
+        .pay-button:hover {
+
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 10px 30px
+                rgba(255, 255, 255, 0.12);
+
+        }
+
+
+        .pay-button:active {
+
+            transform: translateY(0);
+
+        }
+
+
+        .pay-button:disabled {
+
+            opacity: 0.5;
+
+            cursor: not-allowed;
+
+            transform: none;
+
+            box-shadow: none;
+
+        }
+
+
+        .note {
+
+            margin-top: 20px;
+
+            color: #555555;
+
+            font-size: 10px;
+
+            letter-spacing: 1px;
+
+        }
+
+
+        .status {
+
+            min-height: 20px;
+
+            margin-top: 18px;
+
+            font-size: 12px;
+
+            color: #888888;
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!--
+        Flask places the payment information
+        into these data attributes.
+
+        This keeps the JavaScript itself valid
+        JavaScript and avoids VS Code's Jinja
+        syntax errors.
+    -->
+
+    <div
+        class="payment-card"
+
+        id="payment-data"
+
+        data-key-id="{{ key_id }}"
+
+        data-order-id="{{ order_id }}"
+
+        data-amount="{{ amount }}"
+
+        data-name="{{ name }}"
+
+        data-registration-id="{{ registration_id }}"
+    >
+
+
+        <div class="brand">
+            OBSIDIA'27
+        </div>
+
+
+        <div class="subtitle">
+            FAREWELL 2026 — 2027
+        </div>
+
+
+        <div class="details">
+
+            <div class="name">
+                {{ name }}
+            </div>
+
+            <div class="registration">
+                Registration #{{ registration_id }}
+            </div>
+
+        </div>
+
+
+        <div class="amount">
+            ₹2000
+        </div>
+
+
+        <button
+            id="pay-button"
+            class="pay-button"
+            type="button"
+        >
+            PAY ₹2000
+        </button>
+
+
+        <div
+            id="status"
+            class="status"
+        ></div>
+
+
+        <div class="note">
+            SECURE TEST PAYMENT
+        </div>
+
+
+    </div>
+
+
+    <script>
+
+        /*
+         * =====================================================
+         * GET PAYMENT DATA
+         * =====================================================
+         */
+
+        const paymentData =
+            document.getElementById(
+                "payment-data"
+            );
+
+
+        const keyId =
+            paymentData.dataset.keyId;
+
+
+        const orderId =
+            paymentData.dataset.orderId;
+
+
+        const amount =
+            Number(
+                paymentData.dataset.amount
+            );
+
+
+        const name =
+            paymentData.dataset.name;
+
+
+        const registrationId =
+            paymentData.dataset.registrationId;
+
+
+        const payButton =
+            document.getElementById(
+                "pay-button"
+            );
+
+
+        const status =
+            document.getElementById(
+                "status"
+            );
+
+
+        /*
+         * =====================================================
+         * RAZORPAY CHECKOUT
+         * =====================================================
+         */
+
+        const options = {
+
+            key: keyId,
+
+            amount: amount,
+
+            currency: "INR",
+
+            name: "Obsidia'27",
+
+            description:
+                "Farewell 2026–2027 Entry Pass",
+
+            order_id: orderId,
+
+
+            prefill: {
+
+                name: name
+
+            },
+
+
+            theme: {
+
+                color: "#777777"
+
+            },
+
+
+            /*
+             * =================================================
+             * PAYMENT HANDLER
+             *
+             * Razorpay calls this after the checkout
+             * reports a successful payment.
+             *
+             * Our server then verifies the signature.
+             * =================================================
+             */
+
+            handler: function (response) {
+
+                console.log(
+                    "Razorpay payment response:",
+                    response
+                );
+
+
+                status.textContent =
+                    "Verifying payment...";
+
+
+                payButton.disabled = true;
+
+
+                /*
+                 * Send the Razorpay response
+                 * to our Flask server.
+                 */
+
+                fetch(
+                    "/payment-success",
+                    {
+
+                        method: "POST",
+
+                        headers: {
+
+                            "Content-Type":
+                                "application/json"
+
+                        },
+
+                        body:
+                            JSON.stringify(
+                                response
+                            )
+
+                    }
+                )
+
+
+                .then(
+                    function (serverResponse) {
+
+                        /*
+                         * Convert Flask's JSON
+                         * response into JavaScript.
+                         */
+
+                        return serverResponse.json();
+
+                    }
+                )
+
+
+                .then(
+                    function (data) {
+
+                        console.log(
+                            "Server verification response:",
+                            data
+                        );
+
+
+                        /*
+                         * =================================================
+                         * VERIFIED
+                         * =================================================
+                         */
+
+                        if (data.success) {
+
+                            status.textContent =
+                                "Payment verified. Finalizing...";
+
+
+                            /*
+                             * IMPORTANT:
+                             *
+                             * We only redirect here after
+                             * our Flask server says the
+                             * signature was valid.
+                             */
+
+                            window.location.href =
+                                "/payment-complete/" +
+                                data.registration_id;
+
+                        }
+
+
+                        /*
+                         * =================================================
+                         * VERIFICATION FAILED
+                         * =================================================
+                         */
+
+                        else {
+
+                            status.textContent =
+                                "Payment verification failed.";
+
+                            payButton.disabled =
+                                false;
+
+
+                            alert(
+                                "Payment verification failed. " +
+                                "No ticket has been issued."
+                            );
+
+                        }
+
+                    }
+                )
+
+
+                .catch(
+                    function (error) {
+
+                        console.error(
+                            "Payment verification error:",
+                            error
+                        );
+
+
+                        status.textContent =
+                            "Unable to verify payment.";
+
+
+                        payButton.disabled =
+                            false;
+
+
+                        alert(
+                            "There was a problem verifying " +
+                            "your payment. Please contact the organisers."
+                        );
+
+                    }
+                );
+
+            },
+
+
+            /*
+             * =================================================
+             * PAYMENT WINDOW CLOSED
+             * =================================================
+             */
+
+            modal: {
+
+    ondismiss: function () {
+
+        console.log(
+            "Razorpay checkout closed."
+        );
+
+
+        status.textContent =
+            "Payment cancelled.";
+
+
+        payButton.disabled = false;
+
+        payButton.textContent =
+            "PAY ₹2000";
+
+    }
+
+}
+
+        };
+
+
+        /*
+         * =====================================================
+         * CREATE RAZORPAY INSTANCE
+         * =====================================================
+         */
+
+        const razorpay =
+            new Razorpay(options);
+
+
+        /*
+         * =====================================================
+         * PAY BUTTON
+         * =====================================================
+         */
+
+        payButton.addEventListener(
+    "click",
+    function () {
+
+        /*
+         * Prevent accidental double-clicks.
+         */
+
+        if (payButton.disabled) {
+            return;
+        }
+
+
+        payButton.disabled = true;
+
+        payButton.textContent =
+            "OPENING SECURE CHECKOUT...";
+
+
+        status.textContent =
+            "Opening secure checkout...";
+
+
+        try {
+
+            razorpay.open();
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "Unable to open Razorpay:",
+                error
+            );
+
+
+            payButton.disabled = false;
+
+            payButton.textContent =
+                "PAY ₹2000";
+
+
+            status.textContent =
+                "Unable to open payment checkout.";
+
+        }
+
+    }
+);
+
+    </script>
+
+
+</body>
+
+</html>

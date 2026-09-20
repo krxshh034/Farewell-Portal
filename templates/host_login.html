@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Obsidia'27 — Host Login</title>
+
+
+    <style>
+
+    * {
+        box-sizing: border-box;
+    }
+
+
+    body {
+
+        margin: 0;
+
+        min-height: 100vh;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        padding: 20px;
+
+        background:
+            radial-gradient(
+                circle at top,
+                #181818 0%,
+                #080808 45%,
+                #020202 100%
+            );
+
+        color: #eeeeee;
+
+        font-family:
+            Arial,
+            Helvetica,
+            sans-serif;
+    }
+
+
+    .login-box {
+
+        width: min(
+            420px,
+            100%
+        );
+
+        padding: 45px 40px;
+
+        background:
+            rgba(15, 15, 15, 0.94);
+
+        border:
+            1px solid
+            rgba(
+                255,
+                255,
+                255,
+                0.16
+            );
+
+        box-shadow:
+            0 30px 80px
+            rgba(
+                0,
+                0,
+                0,
+                0.75
+            );
+
+        backdrop-filter: blur(12px);
+    }
+
+
+    .event {
+
+        font-family:
+            Georgia,
+            "Times New Roman",
+            serif;
+
+        font-size: 30px;
+
+        letter-spacing: 7px;
+
+        font-weight: bold;
+
+        color: #eeeeee;
+    }
+
+
+    .subtitle {
+
+        margin-top: 10px;
+
+        color: #777777;
+
+        font-size: 10px;
+
+        letter-spacing: 4px;
+
+        text-transform: uppercase;
+    }
+
+
+    .event-year {
+
+        margin-top: 8px;
+
+        color: #555555;
+
+        font-size: 9px;
+
+        letter-spacing: 3px;
+
+        text-transform: uppercase;
+    }
+
+
+    .divider {
+
+        height: 1px;
+
+        margin: 30px 0;
+
+        background:
+            linear-gradient(
+                to right,
+                transparent,
+                rgba(255, 255, 255, 0.22),
+                transparent
+            );
+    }
+
+
+    label {
+
+        display: block;
+
+        margin-bottom: 8px;
+
+        color: #999999;
+
+        font-size: 10px;
+
+        letter-spacing: 2px;
+
+        text-transform: uppercase;
+    }
+
+
+    input {
+
+        width: 100%;
+
+        padding: 14px;
+
+        margin-bottom: 21px;
+
+        border:
+            1px solid
+            #303030;
+
+        border-radius: 1px;
+
+        background: #0b0b0b;
+
+        color: #ffffff;
+
+        outline: none;
+
+        font-size: 15px;
+
+        transition:
+            border-color 0.25s ease,
+            box-shadow 0.25s ease;
+    }
+
+
+    input:focus {
+
+        border-color:
+            #5A0F1B;
+
+        box-shadow:
+            0 0 0 2px
+            rgba(
+                90,
+                15,
+                27,
+                0.15
+            );
+    }
+
+
+    button {
+
+        width: 100%;
+
+        padding: 15px;
+
+        margin-top: 4px;
+
+        border:
+            1px solid
+            rgba(
+                255,
+                255,
+                255,
+                0.55
+            );
+
+        background:
+            linear-gradient(
+                120deg,
+                #777777,
+                #eeeeee,
+                #888888
+            );
+
+        color: #080808;
+
+        cursor: pointer;
+
+        font-weight: bold;
+
+        letter-spacing: 2px;
+
+        transition:
+            transform 0.2s ease,
+            box-shadow 0.2s ease;
+    }
+
+
+    button:hover {
+
+        transform:
+            translateY(-2px);
+
+        box-shadow:
+            0 10px 30px
+            rgba(
+                255,
+                255,
+                255,
+                0.10
+            );
+    }
+
+
+    button:active {
+
+        transform:
+            translateY(0);
+    }
+
+
+    .error {
+
+        margin-bottom: 20px;
+
+        padding: 12px;
+
+        border:
+            1px solid
+            rgba(
+                120,
+                30,
+                45,
+                0.55
+            );
+
+        background:
+            rgba(
+                90,
+                15,
+                27,
+                0.16
+            );
+
+        color: #d9a0a8;
+
+        font-size: 12px;
+
+        line-height: 1.5;
+    }
+
+
+    @media (max-width: 500px) {
+
+        body {
+
+            padding: 15px;
+        }
+
+
+        .login-box {
+
+            padding:
+                35px 25px;
+        }
+
+
+        .event {
+
+            font-size: 25px;
+
+            letter-spacing: 5px;
+        }
+
+    }
+
+</style>
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <div class="login-box">
+
+
+        <div class="event">
+            OBSIDIA'27
+        </div>
+
+
+        <div class="subtitle">
+            Host Control
+        </div>
+
+        <div class="event-year">
+    FAREWELL 2026 — 2027
+</div>
+
+
+        <div class="divider"></div>
+
+
+        {% if error %}
+
+        <div class="error">
+            {{ error }}
+        </div>
+
+        {% endif %}
+
+
+        <form
+            method="POST"
+            action="{{ url_for('host_login') }}"
+        >
+
+
+            <label>
+                Username
+            </label>
+
+
+            <input
+                type="text"
+                name="username"
+                autocomplete="username"
+                required
+            >
+
+
+            <label>
+                Password
+            </label>
+
+
+            <input
+                type="password"
+                name="password"
+                autocomplete="current-password"
+                required
+            >
+
+
+            <button type="submit">
+                ENTER HOST PANEL
+            </button>
+
+
+        </form>
+
+
+    </div>
+
+
+</body>
+
+</html>

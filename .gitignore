@@ -1,0 +1,33 @@
+# macOS System Files
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# VS Code Editor Settings
+.vscode/
+
+# Java Compiled Files & Build Outputs
+*.class
+*.log
+*.ctxt
+.mtj.tmp/
+
+# Package Files #
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# Environment Variables & Secrets
+.env
+
+# IP checkpoints
+192.168.29.218-key.pem
+192.168.29.218.pem
+
+# database
+farewell_backup.db
+farewell_predeployment_backup.db
+farewell_2026-08-19_00-06-49.db

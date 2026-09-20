@@ -1,0 +1,1702 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Obsidia'27 — Host Dashboard</title>
+
+
+    <style>
+
+
+    * {
+        box-sizing: border-box;
+    }
+
+
+    body {
+
+        margin: 0;
+
+        min-height: 100vh;
+
+        background:
+            radial-gradient(
+                circle at top,
+                #1a1a1a 0%,
+                #080808 45%,
+                #030303 100%
+            );
+
+        color: #eeeeee;
+
+        font-family:
+            Arial,
+            Helvetica,
+            sans-serif;
+    }
+
+
+    /* ====================================================
+       TOP BAR
+    ==================================================== */
+
+    .topbar {
+
+        padding: 20px 30px;
+
+        border-bottom:
+            1px solid
+            rgba(255,255,255,0.12);
+
+        display: flex;
+
+        justify-content: space-between;
+
+        align-items: center;
+
+        position: sticky;
+
+        top: 0;
+
+        z-index: 10;
+
+        background:
+            rgba(5,5,5,0.94);
+
+        backdrop-filter:
+            blur(14px);
+    }
+
+
+    .brand {
+
+        font-family:
+            Georgia,
+            "Times New Roman",
+            serif;
+
+        font-size: 24px;
+
+        font-weight: bold;
+
+        letter-spacing: 5px;
+
+        color: #eeeeee;
+    }
+
+
+    .subtitle {
+
+        margin-top: 6px;
+
+        color: #666;
+
+        font-size: 9px;
+
+        letter-spacing: 3px;
+
+        text-transform: uppercase;
+    }
+
+
+    .top-actions {
+
+        display: flex;
+
+        gap: 10px;
+
+        align-items: center;
+    }
+
+
+    .top-button {
+
+        display: inline-block;
+
+        padding:
+            10px 15px;
+
+        border:
+            1px solid
+            #3b3b3b;
+
+        color: #999;
+
+        text-decoration: none;
+
+        font-size: 10px;
+
+        letter-spacing: 2px;
+
+        transition:
+            color 0.2s ease,
+            border-color 0.2s ease,
+            background 0.2s ease;
+    }
+
+
+    .top-button:hover {
+
+        color: #fff;
+
+        border-color: #777;
+
+        background:
+            rgba(255,255,255,0.03);
+    }
+
+
+    .logout {
+
+        border-color:
+            rgba(120,30,45,0.45);
+
+        color: #b77b84;
+    }
+
+
+    .logout:hover {
+
+        border-color:
+            rgba(120,30,45,0.8);
+
+        color: #e2b2b8;
+
+        background:
+            rgba(90,15,27,0.10);
+    }
+
+
+    /* ====================================================
+       MAIN
+    ==================================================== */
+
+    .container {
+
+        width:
+            min(
+                1250px,
+                calc(100% - 40px)
+            );
+
+        margin:
+            35px auto 60px;
+    }
+
+
+    .page-heading {
+
+        margin-bottom: 25px;
+    }
+
+
+    .page-heading h1 {
+
+        margin: 0;
+
+        font-family:
+            Georgia,
+            "Times New Roman",
+            serif;
+
+        font-size: 32px;
+
+        font-weight: normal;
+
+        letter-spacing: 2px;
+    }
+
+
+    .page-heading p {
+
+        margin-top: 8px;
+
+        color: #666;
+
+        font-size: 12px;
+    }
+
+
+    /* ====================================================
+       STATISTICS
+    ==================================================== */
+
+    .stats {
+
+        display: grid;
+
+        grid-template-columns:
+            repeat(4, 1fr);
+
+        gap: 14px;
+
+        margin-bottom: 15px;
+    }
+
+
+    .stat {
+
+        background:
+            linear-gradient(
+                145deg,
+                #131313,
+                #080808
+            );
+
+        border:
+            1px solid
+            rgba(255,255,255,0.10);
+
+        padding: 22px;
+
+        min-height: 125px;
+
+        position: relative;
+
+        overflow: hidden;
+
+        transition:
+            border-color 0.2s ease,
+            transform 0.2s ease;
+    }
+
+
+    .stat:hover {
+
+        border-color:
+            rgba(255,255,255,0.18);
+
+        transform:
+            translateY(-1px);
+    }
+
+
+    .stat::after {
+
+        content: "";
+
+        position: absolute;
+
+        width: 100px;
+
+        height: 100px;
+
+        right: -45px;
+
+        top: -45px;
+
+        border-radius: 50%;
+
+        border:
+            1px solid
+            rgba(255,255,255,0.05);
+    }
+
+
+    .stat-label {
+
+        color: #777;
+
+        font-size: 9px;
+
+        letter-spacing: 2px;
+
+        text-transform: uppercase;
+    }
+
+
+    .stat-value {
+
+        margin-top: 15px;
+
+        font-family:
+            Georgia,
+            serif;
+
+        font-size: 34px;
+
+        color: #eeeeee;
+    }
+
+
+    .stat-small {
+
+        margin-top: 5px;
+
+        color: #555;
+
+        font-size: 10px;
+    }
+
+
+    /* ====================================================
+       COLLECTION
+    ==================================================== */
+
+    .collection {
+
+        margin-top: 14px;
+
+        padding: 25px;
+
+        border:
+            1px solid
+            rgba(255,255,255,0.10);
+
+        background:
+            linear-gradient(
+                145deg,
+                #121212,
+                #080808
+            );
+
+        display: flex;
+
+        justify-content: space-between;
+
+        align-items: center;
+
+        position: relative;
+
+        overflow: hidden;
+    }
+
+
+    .collection::before {
+
+        content: "";
+
+        position: absolute;
+
+        left: 0;
+
+        top: 0;
+
+        bottom: 0;
+
+        width: 2px;
+
+        background:
+            #5A0F1B;
+    }
+
+
+    .collection-label {
+
+        color: #777;
+
+        font-size: 9px;
+
+        letter-spacing: 3px;
+
+        text-transform: uppercase;
+    }
+
+
+    .collection-value {
+
+        margin-top: 7px;
+
+        font-family:
+            Georgia,
+            serif;
+
+        font-size: 32px;
+
+        color: #eeeeee;
+    }
+
+
+    .collection-note {
+
+        color: #666;
+
+        font-size: 10px;
+
+        text-align: right;
+
+        line-height: 1.6;
+    }
+
+
+    /* ====================================================
+       QUICK ACTIONS
+    ==================================================== */
+
+    .scanner-area {
+
+        margin-top: 20px;
+
+        display: grid;
+
+        grid-template-columns:
+            1fr 1fr;
+
+        gap: 15px;
+    }
+
+
+    .scanner-button {
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        min-height: 90px;
+
+        background:
+            linear-gradient(
+                120deg,
+                #777,
+                #eeeeee,
+                #888
+            );
+
+        color: #050505;
+
+        text-decoration: none;
+
+        font-weight: bold;
+
+        letter-spacing: 3px;
+
+        font-size: 12px;
+
+        border:
+            1px solid
+            #aaa;
+
+        transition:
+            transform 0.2s ease,
+            box-shadow 0.2s ease;
+    }
+
+
+    .scanner-button:hover {
+
+        background:
+            linear-gradient(
+                120deg,
+                #888,
+                #ffffff,
+                #999
+            );
+
+        transform:
+            translateY(-2px);
+
+        box-shadow:
+            0 12px 30px
+            rgba(255,255,255,0.08);
+    }
+
+
+    .secondary-button {
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        min-height: 90px;
+
+        border:
+            1px solid
+            rgba(255,255,255,0.15);
+
+        color: #999;
+
+        text-decoration: none;
+
+        letter-spacing: 2px;
+
+        font-size: 11px;
+
+        transition:
+            border-color 0.2s ease,
+            color 0.2s ease,
+            background 0.2s ease;
+    }
+
+
+    .secondary-button:hover {
+
+        border-color:
+            rgba(120,30,45,0.55);
+
+        color: #d0a0a7;
+
+        background:
+            rgba(90,15,27,0.08);
+    }
+
+
+    /* ====================================================
+       FILTER PANEL
+    ==================================================== */
+
+    .section-title {
+
+        margin-top: 40px;
+
+        margin-bottom: 15px;
+
+        font-family:
+            Georgia,
+            "Times New Roman",
+            serif;
+
+        font-size: 22px;
+
+        letter-spacing: 1px;
+    }
+
+
+    .filter-panel {
+
+        padding: 18px;
+
+        border:
+            1px solid
+            rgba(255,255,255,0.10);
+
+        background:
+            linear-gradient(
+                145deg,
+                #111,
+                #080808
+            );
+
+        margin-bottom: 15px;
+    }
+
+
+    .filter-form {
+
+        display: grid;
+
+        grid-template-columns:
+            minmax(220px, 2fr)
+            1fr
+            1fr
+            1fr
+            auto
+            auto;
+
+        gap: 10px;
+
+        align-items: center;
+    }
+
+
+    .search-input,
+    .filter-select {
+
+        width: 100%;
+
+        padding: 12px 13px;
+
+        background: #050505;
+
+        color: #ddd;
+
+        border:
+            1px solid
+            #333;
+
+        outline: none;
+
+        font-family:
+            Arial,
+            Helvetica,
+            sans-serif;
+
+        font-size: 11px;
+
+        transition:
+            border-color 0.2s ease,
+            box-shadow 0.2s ease;
+    }
+
+
+    .search-input:focus,
+    .filter-select:focus {
+
+        border-color:
+            #5A0F1B;
+
+        box-shadow:
+            0 0 0 2px
+            rgba(90,15,27,0.10);
+    }
+
+
+    .search-input::placeholder {
+
+        color: #555;
+    }
+
+
+    .filter-button {
+
+        padding:
+            12px 18px;
+
+        border:
+            1px solid
+            #888;
+
+        background: #eee;
+
+        color: #050505;
+
+        cursor: pointer;
+
+        font-size: 10px;
+
+        font-weight: bold;
+
+        letter-spacing: 2px;
+
+        transition:
+            background 0.2s ease,
+            transform 0.2s ease;
+    }
+
+
+    .filter-button:hover {
+
+        background: #fff;
+
+        transform:
+            translateY(-1px);
+    }
+
+
+    .clear-button {
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        padding:
+            12px 15px;
+
+        border:
+            1px solid
+            #333;
+
+        color: #888;
+
+        text-decoration: none;
+
+        font-size: 10px;
+
+        letter-spacing: 2px;
+
+        transition:
+            color 0.2s ease,
+            border-color 0.2s ease;
+    }
+
+
+    .clear-button:hover {
+
+        color: #fff;
+
+        border-color: #666;
+    }
+
+
+    .results-info {
+
+    margin-top: 12px;
+
+    color: #555;
+
+    font-size: 10px;
+
+    letter-spacing: 1px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 15px;
+}
+
+
+    .results-info strong {
+
+        color: #aaa;
+    }
+
+    .refresh-button {
+
+    padding:
+        8px 12px;
+
+    border:
+        1px solid
+        #333;
+
+    background:
+        transparent;
+
+    color:
+        #888;
+
+    cursor: pointer;
+
+    font-size: 9px;
+
+    letter-spacing: 2px;
+
+    transition:
+        color 0.2s ease,
+        border-color 0.2s ease,
+        background 0.2s ease;
+}
+
+
+.refresh-button:hover {
+
+    color: #fff;
+
+    border-color: #666;
+
+    background:
+        rgba(255,255,255,0.03);
+}
+
+    /* ====================================================
+       TABLE
+    ==================================================== */
+
+    .table-container {
+
+        overflow-x: auto;
+
+        border:
+            1px solid
+            rgba(255,255,255,0.10);
+
+        background: #090909;
+    }
+
+
+    table {
+
+        width: 100%;
+
+        border-collapse: collapse;
+
+        min-width: 900px;
+    }
+
+
+    th {
+
+        padding:
+            15px 14px;
+
+        text-align: left;
+
+        color: #666;
+
+        font-size: 9px;
+
+        letter-spacing: 2px;
+
+        text-transform: uppercase;
+
+        border-bottom:
+            1px solid
+            rgba(255,255,255,0.10);
+
+        background:
+            #0c0c0c;
+    }
+
+
+    td {
+
+        padding:
+            15px 14px;
+
+        border-bottom:
+            1px solid
+            rgba(255,255,255,0.06);
+
+        font-size: 12px;
+
+        color: #bbb;
+    }
+
+
+    tr:last-child td {
+
+        border-bottom: none;
+    }
+
+
+    tr:hover td {
+
+        background:
+            rgba(255,255,255,0.025);
+    }
+
+
+    .name {
+
+        color: #eeeeee;
+
+        font-weight: bold;
+    }
+
+
+    .ticket {
+
+        font-family:
+            monospace;
+
+        letter-spacing: 1px;
+
+        color: #999;
+    }
+
+
+    .registration-time {
+
+        color: #aaa;
+
+        font-size: 11px;
+
+        line-height: 1.5;
+
+        white-space: nowrap;
+    }
+
+
+    .check-time {
+
+        color: #777;
+
+        font-size: 10px;
+
+        margin-top: 5px;
+
+        white-space: nowrap;
+    }
+
+
+    /* ====================================================
+       STATUS BADGES
+    ==================================================== */
+
+    .badge {
+
+        display: inline-block;
+
+        padding:
+            5px 8px;
+
+        font-size: 8px;
+
+        letter-spacing: 1px;
+
+        border: 1px solid;
+    }
+
+
+    .paid {
+
+        color: #a9d8b5;
+
+        border-color:
+            rgba(160,220,175,0.3);
+
+        background:
+            rgba(160,220,175,0.04);
+    }
+
+
+    .pending {
+
+        color: #d5b878;
+
+        border-color:
+            rgba(220,185,100,0.3);
+
+        background:
+            rgba(220,185,100,0.04);
+    }
+
+
+    .checked {
+
+        color: #b8d6ef;
+
+        border-color:
+            rgba(150,200,240,0.3);
+
+        background:
+            rgba(150,200,240,0.04);
+    }
+
+
+    .not-checked {
+
+        color: #777;
+
+        border-color:
+            rgba(255,255,255,0.10);
+
+        background:
+            rgba(255,255,255,0.02);
+    }
+
+
+    .empty {
+
+        padding: 45px;
+
+        text-align: center;
+
+        color: #555;
+
+        font-size: 12px;
+    }
+
+
+    /* ====================================================
+       RESPONSIVE
+    ==================================================== */
+
+    @media (max-width: 1050px) {
+
+        .filter-form {
+
+            grid-template-columns:
+                2fr 1fr 1fr;
+
+        }
+
+    }
+
+
+    @media (max-width: 850px) {
+
+        .stats {
+
+            grid-template-columns:
+                repeat(2, 1fr);
+        }
+
+
+        .scanner-area {
+
+            grid-template-columns: 1fr;
+        }
+
+
+        .filter-form {
+
+            grid-template-columns:
+                1fr 1fr;
+
+        }
+
+    }
+
+
+    @media (max-width: 550px) {
+
+        .topbar {
+
+            padding:
+                16px;
+        }
+
+
+        .topbar {
+
+            align-items: flex-start;
+
+        }
+
+
+        .top-actions {
+
+            gap: 6px;
+        }
+
+
+        .brand {
+
+            font-size: 18px;
+
+            letter-spacing: 3px;
+        }
+
+
+        .subtitle {
+
+            font-size: 7px;
+
+            letter-spacing: 2px;
+        }
+
+
+        .top-button {
+
+            padding:
+                8px 9px;
+
+            font-size: 8px;
+
+            letter-spacing: 1px;
+        }
+
+
+        .container {
+
+            width:
+                calc(100% - 20px);
+
+            margin-top: 25px;
+        }
+
+
+        .page-heading h1 {
+
+            font-size: 27px;
+        }
+
+
+        .page-heading p {
+
+            font-size: 11px;
+
+            line-height: 1.5;
+        }
+
+
+        .stats {
+
+            grid-template-columns:
+                1fr;
+        }
+
+
+        .collection {
+
+            display: block;
+        }
+
+
+        .collection-note {
+
+            text-align: left;
+
+            margin-top: 12px;
+        }
+
+
+        .filter-form {
+
+            grid-template-columns:
+                1fr;
+
+        }
+
+
+        .scanner-button,
+        .secondary-button {
+
+            min-height: 75px;
+        }
+
+    }
+
+
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header class="topbar">
+
+    <div>
+
+        <div class="brand">
+            OBSIDIA'27
+        </div>
+
+        <div class="subtitle">
+            Farewell 2026–2027 · Host Control
+        </div>
+
+    </div>
+
+
+    <div class="top-actions">
+
+        <a
+            href="{{ url_for('host_scanner') }}"
+            class="top-button"
+        >
+            SCANNER
+        </a>
+
+
+        <a
+            href="{{ url_for('host_logout') }}"
+            class="top-button logout"
+        >
+            LOGOUT
+        </a>
+
+    </div>
+
+</header>
+
+
+<main class="container">
+
+
+    <!-- ====================================================
+         HEADING
+    ===================================================== -->
+
+    <div class="page-heading">
+
+        <h1>
+            Host Dashboard
+        </h1>
+
+        <p>
+            Registration, payment and entry overview.
+        </p>
+
+    </div>
+
+
+    <!-- ====================================================
+         STATISTICS
+    ===================================================== -->
+
+    <section class="stats">
+
+
+        <div class="stat">
+
+            <div class="stat-label">
+                Total Registrations
+            </div>
+
+            <div class="stat-value">
+                {{ total_registrations }}
+            </div>
+
+            <div class="stat-small">
+                All registration attempts
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-label">
+                Paid
+            </div>
+
+            <div class="stat-value">
+                {{ total_paid }}
+            </div>
+
+            <div class="stat-small">
+                Payment verified
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-label">
+                Pending
+            </div>
+
+            <div class="stat-value">
+                {{ total_pending }}
+            </div>
+
+            <div class="stat-small">
+                Payment incomplete
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-label">
+                Checked In
+            </div>
+
+            <div class="stat-value">
+                {{ total_checked_in }}
+            </div>
+
+            <div class="stat-small">
+                Successfully entered
+            </div>
+
+        </div>
+
+
+    </section>
+
+
+    <!-- ====================================================
+         COLLECTION
+    ===================================================== -->
+
+    <section class="collection">
+
+        <div>
+
+            <div class="collection-label">
+                Verified Collection
+            </div>
+
+            <div class="collection-value">
+                ₹{{ total_collected }}
+            </div>
+
+        </div>
+
+
+        <div class="collection-note">
+
+            Based only on<br>
+            verified payments.
+
+        </div>
+
+    </section>
+
+
+    <!-- ====================================================
+         QUICK ACTIONS
+    ===================================================== -->
+
+    <section class="scanner-area">
+
+
+        <a
+            href="{{ url_for('host_scanner') }}"
+            class="scanner-button"
+        >
+            SCAN ENTRY PASS
+        </a>
+
+
+        <a
+            href="{{ url_for('host_logout') }}"
+            class="secondary-button"
+        >
+            END HOST SESSION
+        </a>
+
+
+    </section>
+
+
+    <!-- ====================================================
+         REGISTRATIONS
+    ==================================================== -->
+
+    <div class="section-title">
+        Registrations
+    </div>
+
+
+    <!-- ====================================================
+         FILTER PANEL
+    ==================================================== -->
+
+    <section class="filter-panel">
+
+
+        <form
+            method="GET"
+            action="{{ url_for('host_dashboard') }}"
+            class="filter-form"
+        >
+
+
+            <input
+                type="search"
+                name="search"
+                class="search-input"
+                placeholder="Search name, class, ticket or registration #"
+                value="{{ search }}"
+                autocomplete="off"
+            >
+
+
+            <select
+                name="payment"
+                class="filter-select"
+            >
+
+                <option
+                    value="ALL"
+                    {% if payment_filter == "ALL" %}selected{% endif %}
+                >
+                    All Payments
+                </option>
+
+                <option
+                    value="PAID"
+                    {% if payment_filter == "PAID" %}selected{% endif %}
+                >
+                    Paid
+                </option>
+
+                <option
+                    value="PENDING"
+                    {% if payment_filter == "PENDING" %}selected{% endif %}
+                >
+                    Pending
+                </option>
+
+            </select>
+
+
+            <select
+                name="entry"
+                class="filter-select"
+            >
+
+                <option
+                    value="ALL"
+                    {% if entry_filter == "ALL" %}selected{% endif %}
+                >
+                    All Entry
+                </option>
+
+                <option
+                    value="CHECKED_IN"
+                    {% if entry_filter == "CHECKED_IN" %}selected{% endif %}
+                >
+                    Checked In
+                </option>
+
+                <option
+                    value="NOT_CHECKED_IN"
+                    {% if entry_filter == "NOT_CHECKED_IN" %}selected{% endif %}
+                >
+                    Not Checked In
+                </option>
+
+            </select>
+
+
+            <select
+                name="class"
+                class="filter-select"
+            >
+
+                <option
+                    value="ALL"
+                    {% if class_filter == "ALL" %}selected{% endif %}
+                >
+                    All Classes
+                </option>
+
+                <option
+                    value="10-A"
+                    {% if class_filter == "10-A" %}selected{% endif %}
+                >
+                    10-A
+                </option>
+
+                <option
+                    value="10-B"
+                    {% if class_filter == "10-B" %}selected{% endif %}
+                >
+                    10-B
+                </option>
+
+                <option
+                    value="10-C"
+                    {% if class_filter == "10-C" %}selected{% endif %}
+                >
+                    10-C
+                </option>
+
+                <option
+                    value="10-D"
+                    {% if class_filter == "10-D" %}selected{% endif %}
+                >
+                    10-D
+                </option>
+
+            </select>
+
+
+            <button
+                type="submit"
+                class="filter-button"
+            >
+                APPLY
+            </button>
+
+
+            <a
+                href="{{ url_for('host_dashboard') }}"
+                class="clear-button"
+            >
+                CLEAR
+            </a>
+
+
+        </form>
+
+
+        <div class="results-info">
+
+    <span>
+        Showing
+        <strong>{{ registrations|length }}</strong>
+        matching registration{% if registrations|length != 1 %}s{% endif %}.
+    </span>
+
+    <button
+        type="button"
+        class="refresh-button"
+        onclick="window.location.reload()"
+    >
+        REFRESH
+    </button>
+
+</div>
+
+
+    </section>
+
+
+    <!-- ====================================================
+         TABLE
+    ==================================================== -->
+
+    <div class="table-container">
+
+
+        {% if registrations %}
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        #
+                    </th>
+
+                    <th>
+                        Name
+                    </th>
+
+                    <th>
+                        Class
+                    </th>
+
+                    <th>
+                        Amount
+                    </th>
+
+                    <th>
+                        Payment
+                    </th>
+
+                    <th>
+                        Ticket
+                    </th>
+
+                    <th>
+                        Entry
+                    </th>
+
+                    <th>
+                        Registered
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                {% for registration in registrations %}
+
+                <tr>
+
+                    <td>
+                        #{{ registration["id"] }}
+                    </td>
+
+
+                    <td class="name">
+                        {{ registration["name"] }}
+                    </td>
+
+
+                    <td>
+                        {{ registration["class_name"] }}
+                    </td>
+
+
+                    <td>
+                        ₹{{ registration["amount"] }}
+                    </td>
+
+
+                    <td>
+
+                        {% if registration["payment_status"] == "PAID" %}
+
+                            <span class="badge paid">
+                                PAID
+                            </span>
+
+                        {% else %}
+
+                            <span class="badge pending">
+                                {{ registration["payment_status"] }}
+                            </span>
+
+                        {% endif %}
+
+                    </td>
+
+
+                    <td class="ticket">
+
+                        {% if registration["ticket_number"] %}
+
+                            {{ registration["ticket_number"] }}
+
+                        {% else %}
+
+                            —
+
+                        {% endif %}
+
+                    </td>
+
+
+                    <td>
+
+                        {% if registration["ticket_status"] == "CHECKED_IN" %}
+
+                            <span class="badge checked">
+                                CHECKED IN
+                            </span>
+
+                            {% if registration["checked_in_at"] %}
+
+                                <div class="check-time">
+
+                                    {{ registration["checked_in_at"] }}
+
+                                </div>
+
+                            {% endif %}
+
+                        {% else %}
+
+                            <span class="badge not-checked">
+                                NOT ENTERED
+                            </span>
+
+                        {% endif %}
+
+                    </td>
+
+
+                    <td>
+
+                        {% if registration["created_at"] %}
+
+                            <span class="registration-time">
+
+                                {{ registration["created_at"]
+                                   |replace("T", " ")
+                                   |replace("+05:30", "")
+                                }}
+
+                            </span>
+
+                        {% else %}
+
+                            —
+
+                        {% endif %}
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+
+        {% else %}
+
+        <div class="empty">
+
+            No registrations match your current filters.
+
+        </div>
+
+        {% endif %}
+
+
+    </div>
+
+
+</main>
+
+
+</body>
+
+</html>

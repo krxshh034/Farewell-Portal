@@ -1,0 +1,670 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Obsidia'27 — Farewell 2026–2027</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: #050505;
+            color: #f1f1f1;
+            font-family: "Montserrat", sans-serif;
+            min-height: 100vh;
+        }
+
+        /* =========================
+           HERO
+        ========================= */
+
+        .hero {
+            min-height: 100vh;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+
+            background:
+                linear-gradient(
+                    to bottom,
+                    rgba(0, 0, 0, 0.08),
+                    rgba(0, 0, 0, 0.55)
+                ),
+                url("/static/images/obsidia.jpg");
+
+            background-size: cover;
+            background-position: center;
+        }
+
+        .hero::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+
+            background:
+                radial-gradient(
+                    circle at center,
+                    transparent 30%,
+                    rgba(0, 0, 0, 0.45) 100%
+                );
+
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+
+            width: min(92%, 650px);
+
+            text-align: center;
+
+            padding: 35px 25px;
+        }
+
+        .event-label {
+            font-family: "Cinzel", serif;
+            font-size: 14px;
+            letter-spacing: 5px;
+            color: #d5d5d5;
+            margin-bottom: 18px;
+        }
+
+        .hero-title {
+            font-family: "Cinzel", serif;
+            font-size: clamp(42px, 10vw, 78px);
+            font-weight: 600;
+            letter-spacing: 8px;
+
+            background: linear-gradient(
+                120deg,
+                #777,
+                #ffffff,
+                #999,
+                #eeeeee,
+                #666
+            );
+
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+
+            text-shadow:
+                0 0 20px rgba(255, 255, 255, 0.08);
+
+            margin-bottom: 15px;
+        }
+
+        .year {
+            font-family: "Cinzel", serif;
+            font-size: 15px;
+            letter-spacing: 6px;
+            color: #cfcfcf;
+            margin-bottom: 25px;
+        }
+
+        .tagline {
+            max-width: 550px;
+            margin: auto;
+
+            font-size: 15px;
+            line-height: 1.8;
+            font-weight: 300;
+
+            color: #d4d4d4;
+        }
+
+        .divider {
+            width: 90px;
+            height: 1px;
+
+            background: linear-gradient(
+                to right,
+                transparent,
+                #cfcfcf,
+                transparent
+            );
+
+            margin: 30px auto;
+        }
+
+        .enter-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            margin-top: 25px;
+
+            min-width: 220px;
+            padding: 15px 30px;
+
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 2px;
+
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(8px);
+
+            color: white;
+
+            font-family: "Cinzel", serif;
+            font-size: 13px;
+            letter-spacing: 3px;
+
+            text-decoration: none;
+
+            transition:
+                background 0.3s ease,
+                transform 0.3s ease,
+                border-color 0.3s ease;
+        }
+
+        .enter-button:hover {
+            background: rgba(255, 255, 255, 0.17);
+            border-color: white;
+            transform: translateY(-3px);
+        }
+
+        /* =========================
+           REGISTRATION
+        ========================= */
+
+        .registration {
+            min-height: 100vh;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 80px 20px;
+
+            background:
+                radial-gradient(
+                    circle at top,
+                    #181818 0%,
+                    #080808 45%,
+                    #030303 100%
+                );
+        }
+
+        .registration-card {
+            width: min(100%, 500px);
+
+            padding: 45px 35px;
+
+            border: 1px solid rgba(255, 255, 255, 0.15);
+
+            background: rgba(20, 20, 20, 0.72);
+
+            box-shadow:
+                0 30px 80px rgba(0, 0, 0, 0.7),
+                inset 0 0 40px rgba(255, 255, 255, 0.015);
+
+            backdrop-filter: blur(15px);
+        }
+
+        .section-label {
+            font-family: "Cinzel", serif;
+            font-size: 12px;
+            letter-spacing: 4px;
+            color: #aaa;
+            text-align: center;
+        }
+
+        .registration-title {
+            font-family: "Cinzel", serif;
+            font-size: 30px;
+            font-weight: 500;
+            text-align: center;
+
+            margin-top: 12px;
+            margin-bottom: 10px;
+        }
+
+        .registration-subtitle {
+            text-align: center;
+            font-size: 13px;
+            color: #888;
+            line-height: 1.7;
+            margin-bottom: 35px;
+        }
+
+        .field {
+            margin-bottom: 22px;
+        }
+
+        .field label {
+            display: block;
+
+            font-family: "Cinzel", serif;
+            font-size: 11px;
+            letter-spacing: 2px;
+
+            color: #bdbdbd;
+
+            margin-bottom: 9px;
+        }
+
+        .field input,
+        .field select {
+            width: 100%;
+
+            padding: 15px;
+
+            border: 1px solid #333;
+            border-radius: 2px;
+
+            background: #0c0c0c;
+            color: #f0f0f0;
+
+            font-family: "Montserrat", sans-serif;
+            font-size: 14px;
+
+            outline: none;
+
+            transition:
+                border-color 0.25s ease,
+                box-shadow 0.25s ease;
+        }
+
+        .field input:focus,
+        .field select:focus {
+            border-color: #aaa;
+
+            box-shadow:
+                0 0 0 2px rgba(255, 255, 255, 0.04);
+        }
+
+        /* Dropdown styling */
+
+        .field select {
+            appearance: none;
+            -webkit-appearance: none;
+
+            cursor: pointer;
+
+            background-image:
+                linear-gradient(
+                    45deg,
+                    transparent 50%,
+                    #aaa 50%
+                ),
+                linear-gradient(
+                    135deg,
+                    #aaa 50%,
+                    transparent 50%
+                );
+
+            background-position:
+                calc(100% - 20px) 21px,
+                calc(100% - 15px) 21px;
+
+            background-size:
+                5px 5px,
+                5px 5px;
+
+            background-repeat: no-repeat;
+        }
+
+        .field select option {
+            background: #0c0c0c;
+            color: #f0f0f0;
+        }
+
+        .price-box {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            padding: 18px 0;
+
+            margin: 10px 0 25px;
+
+            border-top: 1px solid #252525;
+            border-bottom: 1px solid #252525;
+        }
+
+        .price-label {
+            font-family: "Cinzel", serif;
+            font-size: 12px;
+            letter-spacing: 2px;
+            color: #aaa;
+        }
+
+        .price {
+            font-family: "Cinzel", serif;
+            font-size: 24px;
+            color: #eee;
+        }
+
+        .pay-button {
+            width: 100%;
+
+            padding: 17px;
+
+            border: 1px solid #aaa;
+
+            background: linear-gradient(
+                120deg,
+                #777,
+                #eeeeee,
+                #888
+            );
+
+            color: #080808;
+
+            font-family: "Cinzel", serif;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 3px;
+
+            cursor: pointer;
+
+            transition:
+                transform 0.25s ease,
+                box-shadow 0.25s ease;
+        }
+
+        .pay-button:disabled {
+            opacity: 0.65;
+            cursor: wait;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .pay-button:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 10px 30px rgba(255, 255, 255, 0.12);
+        }
+
+        .security-note {
+            text-align: center;
+
+            font-size: 10px;
+            letter-spacing: 1px;
+
+            color: #666;
+
+            margin-top: 18px;
+        }
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        footer {
+            text-align: center;
+
+            padding: 30px 20px;
+
+            background: #020202;
+
+            color: #555;
+
+            font-size: 10px;
+            letter-spacing: 2px;
+        }
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 600px) {
+
+            .hero {
+                min-height: 95vh;
+                background-position: center;
+            }
+
+            .hero-content {
+                padding: 25px 20px;
+            }
+
+            .event-label {
+                font-size: 11px;
+                letter-spacing: 3px;
+            }
+
+            .hero-title {
+                font-size: 43px;
+                letter-spacing: 5px;
+            }
+
+            .year {
+                font-size: 11px;
+                letter-spacing: 4px;
+            }
+
+            .tagline {
+                font-size: 13px;
+            }
+
+            .registration {
+                padding: 60px 15px;
+            }
+
+            .registration-card {
+                padding: 35px 22px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- =========================
+         HERO
+    ========================= -->
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <div class="event-label">
+                FAREWELL 2026 — 2027
+            </div>
+
+            <h1 class="hero-title">
+                OBSIDIA'27
+            </h1>
+
+            <div class="year">
+                ONE NIGHT · ONE CLASS · COUNTLESS MEMORIES
+            </div>
+
+            <div class="divider"></div>
+
+            <p class="tagline">
+                Last year of ours, to be celebrated to the fullest.<br>
+                We do it for you, we do it for us.
+            </p>
+
+            <a href="#registration" class="enter-button">
+                GET YOUR PASS
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         REGISTRATION
+    ========================= -->
+
+    <section class="registration" id="registration">
+
+        <div class="registration-card">
+
+            <div class="section-label">
+                OBSIDIA'27
+            </div>
+
+            <h2 class="registration-title">
+                Your Entry
+            </h2>
+
+            <p class="registration-subtitle">
+                One final night.<br>
+                One pass to remember it by.
+            </p>
+
+
+            <form
+    action="{{ url_for('register') }}"
+    method="POST"
+    autocomplete="off"
+>
+
+                <div class="field">
+
+                    <label for="name">
+                        FULL NAME
+                    </label>
+
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        placeholder="Enter your full name"
+                        autocomplete="off"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="field">
+
+                    <label for="section">
+                        SECTION
+                    </label>
+
+                    <select
+                        id="section"
+                        name="section"
+                        required
+                    >
+
+                        <option
+                            value=""
+                            disabled
+                            selected
+                        >
+                            Select your section
+                        </option>
+
+                        <option value="A">
+                            A
+                        </option>
+
+                        <option value="B">
+                            B
+                        </option>
+
+                        <option value="C">
+                            C
+                        </option>
+
+                        <option value="D">
+                            D
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="price-box">
+
+                    <span class="price-label">
+                        ENTRY PASS
+                    </span>
+
+                    <span class="price">
+                        ₹2000
+                    </span>
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="pay-button"
+                    id="continue-button"
+                >
+                    CONTINUE TO PAYMENT
+                </button>
+
+            </form>
+
+
+            <div class="security-note">
+                SECURE PAYMENT · DIGITAL ENTRY PASS
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <footer>
+        OBSIDIA'27 · FAREWELL 2026–2027
+    </footer>
+
+    <script>
+
+    const registrationForm =
+        document.querySelector(
+            'form[action="{{ url_for("register") }}"]'
+        );
+
+    const continueButton =
+        document.getElementById(
+            "continue-button"
+        );
+
+
+    registrationForm.addEventListener(
+        "submit",
+        function () {
+
+            /*
+             * Prevent accidental double submission.
+             */
+
+            continueButton.disabled = true;
+
+            continueButton.textContent =
+                "CREATING YOUR REGISTRATION...";
+
+            continueButton.style.opacity =
+                "0.65";
+
+            continueButton.style.cursor =
+                "wait";
+
+        }
+    );
+
+</script>
+</body>
+</html>

@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Obsidia'27 — Entry Pass</title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100%;
+        }
+
+
+        body {
+
+            min-height: 100vh;
+
+            padding: 40px 20px;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            background: #050505;
+
+            color: #eeeeee;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+        }
+
+
+        /* ==================================================
+           MAIN TICKET
+        ================================================== */
+
+        .ticket {
+
+            width: min(900px, 100%);
+
+            position: relative;
+
+            overflow: hidden;
+
+            background: #090909;
+
+            border:
+                1px solid
+                rgba(220, 220, 220, 0.35);
+
+            box-shadow:
+                0 30px 80px
+                rgba(0, 0, 0, 0.8);
+        }
+
+
+        /* ==================================================
+           BACKGROUND IMAGE
+        ================================================== */
+
+        .ticket-background {
+
+            position: absolute;
+
+            inset: 0;
+
+            width: 100%;
+
+            height: 100%;
+
+            object-fit: cover;
+
+            object-position: center;
+
+            opacity: 0.20;
+
+            filter:
+                grayscale(100%)
+                contrast(115%);
+
+            pointer-events: none;
+
+            z-index: 0;
+        }
+
+
+        /* Dark overlay above artwork */
+
+        .ticket-overlay {
+
+            position: absolute;
+
+            inset: 0;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(0, 0, 0, 0.70),
+                    rgba(0, 0, 0, 0.45),
+                    rgba(0, 0, 0, 0.78)
+                );
+
+            pointer-events: none;
+
+            z-index: 1;
+        }
+
+
+        /* ==================================================
+           CONTENT ABOVE BACKGROUND
+        ================================================== */
+
+        .ticket-content {
+
+            position: relative;
+
+            z-index: 2;
+        }
+
+
+        /* ==================================================
+           HEADER
+        ================================================== */
+
+        .header {
+
+            padding: 35px 40px 25px;
+
+            border-bottom:
+                1px solid
+                rgba(255, 255, 255, 0.15);
+
+            background:
+                rgba(0, 0, 0, 0.30);
+        }
+
+
+        .event {
+
+            font-family:
+                Georgia,
+                "Times New Roman",
+                serif;
+
+            font-size: 38px;
+
+            letter-spacing: 8px;
+
+            font-weight: bold;
+        }
+
+
+        .year {
+
+            margin-top: 7px;
+
+            color: #999999;
+
+            font-size: 12px;
+
+            letter-spacing: 4px;
+        }
+
+
+        .tagline {
+
+            margin-top: 22px;
+
+            color: #bcbcbc;
+
+            font-family:
+                Georgia,
+                "Times New Roman",
+                serif;
+
+            font-style: italic;
+
+            font-size: 14px;
+
+            line-height: 1.6;
+        }
+
+
+        /* ==================================================
+           MAIN CONTENT
+        ================================================== */
+
+        .content {
+
+            display: grid;
+
+            grid-template-columns:
+                1fr
+                280px;
+
+            gap: 30px;
+
+            padding: 40px;
+        }
+
+
+        .label {
+
+            color: #5A0F1B;
+
+            font-size: 10px;
+
+            letter-spacing: 3px;
+
+            text-transform: uppercase;
+
+            margin-bottom: 7px;
+        }
+
+
+        .value {
+
+            color: #eeeeee;
+
+            font-size: 24px;
+
+            margin-bottom: 27px;
+        }
+
+
+        .ticket-number {
+
+            font-family: monospace;
+
+            font-size: 16px;
+
+            letter-spacing: 2px;
+        }
+
+
+        .amount {
+
+            font-family:
+                Georgia,
+                "Times New Roman",
+                serif;
+
+            font-size: 32px;
+        }
+
+
+        .paid {
+
+            color: #d5d5d5;
+        }
+
+
+        /* ==================================================
+           QR AREA
+        ================================================== */
+
+        .qr-area {
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 20px;
+
+            background:
+                rgba(255, 255, 255, 0.97);
+        }
+
+
+        .qr {
+
+            width: 210px;
+
+            height: 210px;
+
+            display: block;
+        }
+
+
+        .scan-text {
+
+            margin-top: 15px;
+
+            color: #222222;
+
+            font-size: 10px;
+
+            letter-spacing: 2px;
+
+            text-align: center;
+        }
+
+
+        .verified {
+
+            margin-top: 12px;
+
+            color: #555555;
+
+            font-size: 9px;
+
+            letter-spacing: 2px;
+        }
+
+
+        /* ==================================================
+           FOOTER
+        ================================================== */
+
+        .footer {
+
+            padding: 20px 40px;
+
+            border-top:
+                1px solid
+                rgba(255, 255, 255, 0.15);
+
+            display: flex;
+
+            justify-content: space-between;
+
+            gap: 20px;
+
+            color: #777777;
+
+            font-size: 9px;
+
+            letter-spacing: 2px;
+
+            background:
+                rgba(0, 0, 0, 0.35);
+        }
+
+
+        /* ==================================================
+           BUTTON
+        ================================================== */
+
+        .actions {
+
+            width: min(900px, 100%);
+
+            margin-top: 20px;
+
+            display: flex;
+
+            justify-content: center;
+        }
+
+
+        button {
+
+            padding: 13px 25px;
+
+            border:
+                1px solid
+                #555555;
+
+            background: #151515;
+
+            color: #eeeeee;
+
+            cursor: pointer;
+
+            letter-spacing: 1px;
+        }
+
+
+        button:hover {
+
+            background: #242424;
+        }
+
+
+        /* ==================================================
+           MOBILE
+        ================================================== */
+
+        @media (max-width: 700px) {
+
+            body {
+
+                padding: 15px;
+            }
+
+
+            .header {
+
+                padding: 25px;
+            }
+
+
+            .event {
+
+                font-size: 28px;
+
+                letter-spacing: 5px;
+            }
+
+
+            .content {
+
+                grid-template-columns: 1fr;
+
+                padding: 25px;
+            }
+
+
+            .qr-area {
+
+                width: 100%;
+            }
+
+
+            .footer {
+
+                padding: 18px 25px;
+
+                flex-direction: column;
+            }
+
+        }
+
+
+        /* ==================================================
+           PRINT / SAVE AS PDF
+        ================================================== */
+
+        @media print {
+
+            @page {
+
+                size: A4;
+
+                margin: 0;
+            }
+
+
+            html,
+            body {
+
+                width: 100%;
+
+                min-height: 100%;
+
+                margin: 0;
+
+                padding: 0;
+
+                background: #050505;
+            }
+
+
+            body {
+
+                print-color-adjust: exact;
+
+                -webkit-print-color-adjust: exact;
+            }
+
+
+            .ticket {
+
+                width: 100%;
+
+                min-height: 100vh;
+
+                border: none;
+
+                box-shadow: none;
+            }
+
+
+            .ticket-background {
+
+                opacity: 0.27;
+
+                -webkit-print-color-adjust: exact;
+
+                print-color-adjust: exact;
+            }
+
+
+            .actions {
+
+                display: none;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <div>
+
+
+        <!-- =================================================
+             TICKET
+        ================================================== -->
+
+        <div class="ticket">
+
+
+            <!--
+                OBSIDIA BACKGROUND ARTWORK
+
+                IMPORTANT:
+                Save your original artwork as:
+
+                static/images/obsidia-bg.png
+            -->
+
+            <img
+                class="ticket-background"
+                src="{{ url_for('static', filename='images/obsidia-bg.png') }}"
+                alt=""
+            >
+
+
+            <!-- Dark overlay -->
+
+            <div class="ticket-overlay"></div>
+
+
+            <!-- Everything above artwork -->
+
+            <div class="ticket-content">
+
+
+                <!-- =================================================
+                     HEADER
+                ================================================== -->
+
+                <div class="header">
+
+                    <div class="event">
+                        OBSIDIA'27
+                    </div>
+
+
+                    <div class="year">
+                        FAREWELL 2026 — 2027
+                    </div>
+
+
+                    <div class="tagline">
+                        NOT A FAREWELL, A RITUAL —
+                        WHERE MEMORIES BECOME ECHOES.
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     MAIN INFORMATION
+                ================================================== -->
+
+                <div class="content">
+
+
+                    <!-- STUDENT INFORMATION -->
+
+                    <div>
+
+
+                        <div class="label">
+                            ENTRY PASS
+                        </div>
+
+
+                        <div class="value">
+                            {{ registration["name"] }}
+                        </div>
+
+
+                        <div class="label">
+                            CLASS
+                        </div>
+
+
+                        <div class="value">
+                            {{ registration["class_name"] }}
+                        </div>
+
+
+                        <div class="label">
+                            TICKET NUMBER
+                        </div>
+
+
+                        <div class="value ticket-number">
+                            {{ ticket_number }}
+                        </div>
+
+
+                        <div class="label">
+                            AMOUNT PAID
+                        </div>
+
+
+                        <div class="value amount">
+                            ₹{{ registration["amount"] }}
+                        </div>
+
+
+                        <div class="label">
+                            PAYMENT STATUS
+                        </div>
+
+
+                        <div class="value paid">
+                            VERIFIED ✓
+                        </div>
+
+
+                    </div>
+
+
+                    <!-- =================================================
+                         QR CODE
+                    ================================================== -->
+
+                    <div class="qr-area">
+
+
+                        <img
+                            class="qr"
+                            src="{{ url_for(
+                                'static',
+                                filename='qr/' + ticket_number + '.png'
+                            ) }}"
+                            alt="Obsidia'27 Entry QR Code"
+                        >
+
+
+                        <div class="scan-text">
+                            SCAN FOR ENTRY
+                        </div>
+
+
+                        <div class="verified">
+                            VERIFIED DIGITAL PASS
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- =================================================
+                     FOOTER
+                ================================================== -->
+
+                <div class="footer">
+
+                    <div>
+                        ONE NIGHT • ONE CLASS •
+                        COUNTLESS MEMORIES
+                    </div>
+
+
+                    <div>
+                        OBSIDIA'27
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+        <!-- =================================================
+             PRINT / SAVE BUTTON
+        ================================================== -->
+
+        <div class="actions">
+
+            <button onclick="window.print()">
+                PRINT / SAVE
+            </button>
+
+        </div>
+
+
+    </div>
+
+
+</body>
+
+</html>
