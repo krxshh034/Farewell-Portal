@@ -23,10 +23,6 @@
 # Environment Variables & Secrets
 .env
 
-# IP checkpoints
-192.168.29.218-key.pem
-192.168.29.218.pem
-
 # database
 farewell_backup.db
 farewell_predeployment_backup.db
